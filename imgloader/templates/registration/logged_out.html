@@ -1,10 +1,8 @@
-{% extends "main/layout/basic.html" %}
-{% load static %}
+{% extends "layout/basic.html" %}
 
 {% block title %}Выход из системы{% endblock %}
-    {% block body %}
 
-        <h1>Вы успешно вышли из системы! </h1>
+    {% block header %} Вы успешно вышли из системы! {% endblock %}
+    {% block content %}
         <p>Чтобы войти снова перейдите по <a href="{% url 'login'%}">ссылке</a>.</p>
-
     {% endblock %}
