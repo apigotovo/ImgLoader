@@ -1,11 +1,14 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from braces.views import AnonymousRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import FormView
+from django.views.generic import FormView, CreateView
+from .forms import RegistrationForm, ImgUploadForm
 
-from .forms import RegistrationForm
 
 
-class UserRegistration(FormView):
+
+class UserRegistration(AnonymousRequiredMixin, FormView):
     form_class = RegistrationForm
     success_url = reverse_lazy('login')
     template_name = "registration/create_user.html"
@@ -15,6 +18,9 @@ class UserRegistration(FormView):
         return super().form_valid(form)
 
 
-
+class ImgUpload(LoginRequiredMixin, CreateView):
+    form_class = ImgUploadForm
+    template_name = 'main/upload_img.html'
+    success_url = reverse_lazy('index')
 
 

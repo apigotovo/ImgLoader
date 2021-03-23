@@ -1,0 +1,16 @@
+{% extends "layout/basic.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} Загрузка {% endblock %}
+
+    {% block header %} Загрузка {% endblock %}
+
+    {% block content %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input type="submit" class="btn btn-success" value="Загрузить" />
+            </form>
+
+    {% endblock %}
