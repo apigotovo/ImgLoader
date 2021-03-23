@@ -17,3 +17,8 @@ class ImgUploadForm(forms.ModelForm):
     class Meta:
         model = MediaImg
         fields = ['img', ]
+
+    def save(self, commit=True):
+        return super().save(commit)
+
+
