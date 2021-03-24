@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
-from .views import UserRegistration, ImgUpload, CustomLoginView
+from .views import UserRegistration, ImgUpload, CustomLoginView, img_upload
 
 urlpatterns = [
     path('', ImgUpload.as_view(), name='index'),

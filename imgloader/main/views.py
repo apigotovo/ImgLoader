@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import AnonymousRequiredMixin
 from django.contrib.auth.views import LoginView
@@ -26,6 +28,24 @@ class ImgUpload(LoginRequiredMixin, CreateView):
     template_name = 'main/upload_img.html'
     success_url = reverse_lazy('index')
 
+    def form_valid(self, form):
+        form.instance.created_at = datetime.now()
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
-
+def img_upload(request):
+    if request.method == 'POST':
+        form = ImgUploadForm(request.POST, request.FILES)
+        context = {}
+        if form.is_valid():
+            form.save()
+            context['success'] = True
+        else:
+            context['fail'] = True
+        context['form'] = ImgUploadForm(initial={'created_at': datetime.now(), 'author': request.user})
+        return render(request, 'main/upload_img.html', context)
+    else:
+        form = ImgUploadForm(initial={'created_at': datetime.now(), 'author': request.user})
+    context = {'form': form}
+    return render(request, 'main/upload_img.html', context)
