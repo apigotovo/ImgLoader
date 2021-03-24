@@ -1,4 +1,5 @@
 {% extends "layout/basic.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block title %} Загрузка {% endblock %}
@@ -12,5 +13,32 @@
                 {{ form|crispy }}
                 <input type="submit" class="btn btn-success" value="Загрузить" />
             </form>
+
+        <script src="{% static 'main/js/jquery-3.5.1.min.js' %}"></script>
+        <script src="{% static 'main/js/jquery.waypoints.min.js' %}"></script>
+        <script src="{% static 'main/js/infinite.min.js' %}"></script>
+        <script>
+            function upload(event) {
+            event.preventDefault();
+            var data = new FormData($('form').get(0));
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: $(this).attr('method'),
+                data: data,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    alert('success');
+                }
+            });
+            return false;
+            }
+
+            $(function() {
+                $('form').submit(upload);
+            });
+        </script>
 
     {% endblock %}
