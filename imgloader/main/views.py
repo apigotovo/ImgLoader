@@ -49,7 +49,9 @@ class ImgUpload(LoginRequiredMixin, JSONResponseMixin, AjaxResponseMixin, Create
 
     def post_ajax(self, request, *args, **kwargs):
         logger('a', request.POST)
-        form = ImgUploadForm(request.POST)
+        form = ImgUploadForm(request.POST, request.FILES)
+        form.instance.created_at = datetime.now()
+        form.instance.author = self.request.user
         context = {}
         if form.is_valid():
             form.save()
