@@ -8,7 +8,7 @@
 
     {% block content %}
 
-            <form method="post" id ='img_form' enctype="multipart/form-data">
+            <form method="post" id='img_form' name="testimg" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <input type="submit" class="btn btn-success" value="Загрузить" />
@@ -24,14 +24,22 @@
 			function imgUpload() {
 
 				var csrf_token = $('input[name="csrfmiddlewaretoken"]').val();
-				var form_data = $('input[name="img"]').val();
+				var formElement = document.querySelector("form");
+				var oldForm = document.forms.testimg
+				var form_data = new FormData(oldForm);
 
-                $.post( "http://imgloader.mergeland.me/", {'csrfmiddlewaretoken': csrf_token, 'img': form_data},
-                        function(data) {
-                          alert('jfuirdehfdhgyuvfdhbuyv')
-                        });
+				$.ajax({
+                    url : "http://imgloader.mergeland.me/",
+                    type: "POST",
+                    data : form_data,
+                    processData: false,
+                    contentType: false,
+                    success:function(data, textStatus, jqXHR){
+                        alert(data);
+                    }
+                });
 
-                return false;
+
 			}
 
         </script>
