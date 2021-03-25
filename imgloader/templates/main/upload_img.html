@@ -13,7 +13,7 @@
                 {{ form|crispy }}
                 <input type="submit" class="btn btn-success" value="Загрузить" />
             </form>
-            <div id="res">00</div>
+            <div><h4 id="res" style="color: #009900;"></h4></div>
 
         <script type="text/javascript">
              $("#img_form").submit(function(e){
@@ -22,11 +22,9 @@
              });
 
 			function imgUpload() {
+			    var full_form = document.forms.testimg
 
-				var csrf_token = $('input[name="csrfmiddlewaretoken"]').val();
-				var formElement = document.querySelector("form");
-				var oldForm = document.forms.testimg
-				var form_data = new FormData(oldForm);
+				var form_data = new FormData(full_form);
 
 				$.ajax({
                     url : "http://imgloader.mergeland.me/",
@@ -34,8 +32,11 @@
                     data : form_data,
                     processData: false,
                     contentType: false,
-                    success:function(data, textStatus, jqXHR){
-                        alert(data);
+                    success:function(data){
+                        $('#res').html(data);
+                        full_form.reset();
+
+
                     }
                 });
 

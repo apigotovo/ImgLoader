@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import AnonymousRequiredMixin, AjaxResponseMixin, JSONResponseMixin
 from django.contrib.auth.views import LoginView
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView
@@ -42,24 +42,15 @@ class ImgUpload(LoginRequiredMixin, JSONResponseMixin, AjaxResponseMixin, Create
     template_name = 'main/upload_img.html'
     success_url = reverse_lazy('index')
 
-    def form_valid(self, form):
-        form.instance.created_at = datetime.now()
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
     def post_ajax(self, request, *args, **kwargs):
-        logger('a', request.POST)
         form = ImgUploadForm(request.POST, request.FILES)
         form.instance.created_at = datetime.now()
         form.instance.author = self.request.user
-        context = {}
         if form.is_valid():
             form.save()
-            context['success'] = True
+            return HttpResponse('Изображение успешно загужено! Вы можете управлять своими загрузками в личном кабинете')
         else:
-            context['fail'] = True
-        context['form'] = ImgUploadForm(initial={'created_at': datetime.now(), 'author': request.user})
-        return render(request, 'main/upload_img.html', context)
+            return HttpResponse('Невозможно загрузить данный файл!')
 
 
 def img_upload(request):
