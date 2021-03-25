@@ -59,10 +59,6 @@ class ImgUpload(LoginRequiredMixin, JSONResponseMixin, AjaxResponseMixin, Create
         context['form'] = ImgUploadForm(initial={'created_at': datetime.now(), 'author': request.user})
         return render(request, 'main/upload_img.html', context)
 
-    def post(self, request, *args, **kwargs):
-        logger('b', request.POST)
-        return super().post(request, *args, **kwargs)
-
 
 def img_upload(request):
     if request.method == 'POST':

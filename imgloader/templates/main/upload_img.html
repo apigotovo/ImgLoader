@@ -24,20 +24,12 @@
 			function imgUpload() {
 
 				var csrf_token = $('input[name="csrfmiddlewaretoken"]').val();
-				var data = new FormData($('form')[0])
-				//alert(data);
-				$.ajax('http://imgloader.mergeland.me/', {
-                    csrfmiddlewaretoken: csrf_token,
-                    data: data, // get the form data
-                    type: 'POST', // GET or POST
-                    url: 'http://imgloader.mergeland.me/', // the file to call
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) { // on success..
-                        $('#res').html('QWERTY'); // update the DIV
-                    }
-                });
+				var form_data = $('input[name="img"]').val();
+
+                $.post( "http://imgloader.mergeland.me/", {'csrfmiddlewaretoken': csrf_token, 'img': form_data},
+                        function(data) {
+                          alert('jfuirdehfdhgyuvfdhbuyv')
+                        });
 
                 return false;
 			}
