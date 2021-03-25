@@ -25,7 +25,7 @@ SECRET_KEY = '74vm$^c$3lctbypq1ljqy9(!lj-k0*3t^p=1tror*&l3p&r=+m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['imgloader.mergeland.me']
 
 
 # Application definition

@@ -8,37 +8,40 @@
 
     {% block content %}
 
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" id ='img_form' enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <input type="submit" class="btn btn-success" value="Загрузить" />
             </form>
+            <div id="res">00</div>
 
-        <script src="{% static 'main/js/jquery-3.5.1.min.js' %}"></script>
-        <script src="{% static 'main/js/jquery.waypoints.min.js' %}"></script>
-        <script src="{% static 'main/js/infinite.min.js' %}"></script>
-        <script>
-            function upload(event) {
-            event.preventDefault();
-            var data = new FormData($('form').get(0));
+        <script type="text/javascript">
+             $("#img_form").submit(function(e){
+              e.preventDefault();
+              imgUpload();
+             });
 
-            $.ajax({
-                url: $(this).attr('action'),
-                type: $(this).attr('method'),
-                data: data,
-                cache: false,
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    alert('success');
-                }
-            });
-            return false;
-            }
+			function imgUpload() {
 
-            $(function() {
-                $('form').submit(upload);
-            });
+				var csrf_token = $('input[name="csrfmiddlewaretoken"]').val();
+				var data = new FormData($('form')[0])
+				//alert(data);
+				$.ajax('http://imgloader.mergeland.me/', {
+                    csrfmiddlewaretoken: csrf_token,
+                    data: data, // get the form data
+                    type: 'POST', // GET or POST
+                    url: 'http://imgloader.mergeland.me/', // the file to call
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) { // on success..
+                        $('#res').html('QWERTY'); // update the DIV
+                    }
+                });
+
+                return false;
+			}
+
         </script>
 
     {% endblock %}

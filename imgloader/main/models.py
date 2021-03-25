@@ -12,6 +12,6 @@ class MediaImg(models.Model):
         verbose_name_plural = 'изображения'
         verbose_name = 'изображение'
 
-    img = models.ImageField(verbose_name='изображение', validators=[validators.validate_image_file_extension])
+    img = models.ImageField(verbose_name='изображение')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='автор')
     created_at = models.DateTimeField(verbose_name='дата/время загрузки файла')
