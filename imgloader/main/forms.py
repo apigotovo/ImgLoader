@@ -1,8 +1,15 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+from django.core.exceptions import ValidationError
+from .const import MAX_UPLOAD_SIZE
 from .models import MediaImg
+
+
+def file_size_validator(value):
+    limit = MAX_UPLOAD_SIZE
+    if value.size > limit:
+        raise ValidationError('Максимально допустимый размер файла 2Мб')
 
 
 class RegistrationForm(UserCreationForm):
@@ -14,6 +21,8 @@ class RegistrationForm(UserCreationForm):
 
 
 class ImgUploadForm(forms.ModelForm):
+
+    img = forms.ImageField(validators=[file_size_validator], label='Изображение')
 
     class Meta:
         model = MediaImg

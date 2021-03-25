@@ -13,7 +13,7 @@
                 {{ form|crispy }}
                 <input type="submit" class="btn btn-success" value="Загрузить" />
             </form>
-            <div><h4 id="res" style="color: #009900;"></h4></div>
+            <div id="result"></div>
 
         <script type="text/javascript">
              $("#img_form").submit(function(e){
@@ -33,7 +33,7 @@
                     processData: false,
                     contentType: false,
                     success:function(data){
-                        $('#res').html(data);
+                        $('#result').html(data);
                         full_form.reset();
 
 

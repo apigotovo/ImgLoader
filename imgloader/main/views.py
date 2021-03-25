@@ -48,9 +48,9 @@ class ImgUpload(LoginRequiredMixin, JSONResponseMixin, AjaxResponseMixin, Create
         form.instance.author = self.request.user
         if form.is_valid():
             form.save()
-            return HttpResponse('Изображение успешно загужено! Вы можете управлять своими загрузками в личном кабинете')
+            return HttpResponse('Изображение успешно загужено!')
         else:
-            return HttpResponse('Невозможно загрузить данный файл!')
+            return HttpResponse('Файл не загружен! Максимально допустимый размер файла 2Мб')
 
 
 def img_upload(request):
