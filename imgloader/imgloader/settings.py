@@ -26,6 +26,7 @@ SECRET_KEY = '74vm$^c$3lctbypq1ljqy9(!lj-k0*3t^p=1tror*&l3p&r=+m'
 DEBUG = True
 
 ALLOWED_HOSTS = ['imgloader.mergeland.me']
+PROJECT_URL = 'http://imgloader.mergeland.me'
 
 
 # Application definition
