@@ -1,24 +1,13 @@
-import os
 from datetime import datetime
 
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import AnonymousRequiredMixin, AjaxResponseMixin, JSONResponseMixin
 from django.contrib.auth.views import LoginView
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, ListView, UpdateView
 from .forms import RegistrationForm, ImgUploadForm
 from .models import MediaImg, ImgHistory
-
-
-def logger(message, mr_data):
-    now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    path = os.path.join(settings.BASE_DIR, f'error_log/{now}_{message}.txt')
-    file = open(path, 'w')
-    file.write(str(mr_data))
-    file.close()
 
 
 # Вход
@@ -55,7 +44,7 @@ class ImgUpload(LoginRequiredMixin, JSONResponseMixin, AjaxResponseMixin, Create
 
 
 # Обновление файла
-class ImgUpdate(UpdateView):
+class ImgUpdate(LoginRequiredMixin, UpdateView):
     form_class = ImgUploadForm
     template_name = 'main/update_img.html'
     success_url = reverse_lazy('account')
@@ -63,7 +52,7 @@ class ImgUpdate(UpdateView):
 
 
 # Личный кабинет
-class Account(ListView):
+class Account(LoginRequiredMixin, ListView):
     template_name = 'main/account.html'
     context_object_name = 'img_list'
     paginate_by = 100
@@ -73,7 +62,7 @@ class Account(ListView):
 
 
 # История изменений
-class HistoryImg(ListView):
+class HistoryImg(LoginRequiredMixin, ListView):
     template_name = 'main/history.html'
     context_object_name = 'img_history'
     paginate_by = 100
