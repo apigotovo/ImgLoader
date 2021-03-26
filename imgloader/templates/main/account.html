@@ -12,14 +12,20 @@
     {% if img_list %}
 
         <table class="table table-inverse">
-            <tr><td style="width: 250px;"><b>Имя файла</b></td><td><b>Дата и время загрузки</b></td><td><b>История изменений</b></td><td><b>Ссылка</b></td></tr>
-            {% for img in img_list %}
+            <tr>
+                <td style="width: 250px;"><b>Имя файла</b></td>
+                <td><b>Дата и время загрузки</b></td>
+                <td><b>История изменений</b></td>
+                <td><b>Ссылка</b></td>
+                <td><b>Обновить</b></td>
+            </tr>
+                {% for img in img_list %}
             <tr>
                 <td style="width: 250px;">{{ img.img.name }}</td>
                 <td>{{ img.created_at }}</td>
                 <td><a href="{% url 'history' img.pk %}">История</a></td>
                 <td><a target="_blank" href="{{ img.img.url }}">Открыть</a></td>
-
+                <td><a href="{% url 'update' img.pk %}">Обновить</a></td>
             </tr>
             {% endfor %}
         </table>

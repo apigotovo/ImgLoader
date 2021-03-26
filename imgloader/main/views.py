@@ -8,7 +8,7 @@ from django.contrib.auth.views import LoginView
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import FormView, CreateView, ListView
+from django.views.generic import FormView, CreateView, ListView, UpdateView
 from .forms import RegistrationForm, ImgUploadForm
 from .models import MediaImg, ImgHistory
 
@@ -54,6 +54,14 @@ class ImgUpload(LoginRequiredMixin, JSONResponseMixin, AjaxResponseMixin, Create
             return HttpResponse('Файл не загружен! Максимально допустимый размер файла 2Мб')
 
 
+# Обновление файла
+class ImgUpdate(UpdateView):
+    form_class = ImgUploadForm
+    template_name = 'main/update_img.html'
+    success_url = reverse_lazy('account')
+    queryset = MediaImg.objects.all()
+
+
 # Личный кабинет
 class Account(ListView):
     template_name = 'main/account.html'
@@ -64,6 +72,7 @@ class Account(ListView):
         return MediaImg.objects.filter(author=self.request.user).order_by('created_at').reverse()
 
 
+# История изменений
 class HistoryImg(ListView):
     template_name = 'main/history.html'
     context_object_name = 'img_history'
