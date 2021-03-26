@@ -8,8 +8,9 @@ from django.contrib.auth.views import LoginView
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import FormView, CreateView
+from django.views.generic import FormView, CreateView, ListView
 from .forms import RegistrationForm, ImgUploadForm
+from .models import MediaImg
 
 
 def logger(message, mr_data):
@@ -48,23 +49,17 @@ class ImgUpload(LoginRequiredMixin, JSONResponseMixin, AjaxResponseMixin, Create
         form.instance.author = self.request.user
         if form.is_valid():
             form.save()
-            return HttpResponse('Изображение успешно загужено!')
+            return HttpResponse('Изображение успешно загружено!')
         else:
             return HttpResponse('Файл не загружен! Максимально допустимый размер файла 2Мб')
 
 
-def img_upload(request):
-    if request.method == 'POST':
-        form = ImgUploadForm(request.POST, request.FILES)
-        context = {}
-        if form.is_valid():
-            form.save()
-            context['success'] = True
-        else:
-            context['fail'] = True
-        context['form'] = ImgUploadForm(initial={'created_at': datetime.now(), 'author': request.user})
-        return render(request, 'main/upload_img.html', context)
-    else:
-        form = ImgUploadForm(initial={'created_at': datetime.now(), 'author': request.user})
-    context = {'form': form}
-    return render(request, 'main/upload_img.html', context)
+# Личный кабинет
+class Account(ListView):
+    template_name = 'main/account.html'
+    context_object_name = 'img_list'
+    paginate_by = 100
+
+    def get_queryset(self):
+        return MediaImg.objects.filter(author=self.request.user).order_by('created_at').reverse()
+

@@ -1,0 +1,27 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Личный кабинет {% endblock %}
+
+    {% block header %} Личный кабинет {% endblock %}
+
+    {% block content %}
+    <p><a href="{% url 'index' %}">Загрузить ещё</a> | <a href="{% url 'logout' %}">выйти</a></p>
+
+    {% if img_list %}
+
+        <table>
+            <tr><td><b>Имя файла</b></td><td><b>Дата и время загрузки</b></td><td><b>Ссылка</b></td></tr>
+            {% for img in img_list %}
+            <tr><td>{{ img.img.name }}</td><td>{{ img.created_at }}</td><td><a target="_blank" href="{{ img.img.url }}">Открыть</a></td></tr>
+            {% endfor %}
+        </table>
+
+    {% else %}
+    <h3>Вы ещё не загрузили ни одного изображения.</h3>
+    {% endif %}
+
+
+
+    {% endblock %}

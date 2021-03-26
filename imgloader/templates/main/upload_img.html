@@ -6,7 +6,9 @@
 
     {% block header %} Загрузка {% endblock %}
 
+
     {% block content %}
+    <p><a href="{% url 'account' %}"> Личный кабинет </a></p>
 
             <form method="post" id='img_form' name="testimg" enctype="multipart/form-data">
                 {% csrf_token %}

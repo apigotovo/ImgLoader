@@ -22,7 +22,7 @@ class RegistrationForm(UserCreationForm):
 
 class ImgUploadForm(forms.ModelForm):
 
-    img = forms.ImageField(validators=[file_size_validator], label='Изображение')
+    img = forms.ImageField(validators=[file_size_validator], label='Загрузить изображение')
 
     class Meta:
         model = MediaImg
