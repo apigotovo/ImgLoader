@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, ListView
 from .forms import RegistrationForm, ImgUploadForm
-from .models import MediaImg
+from .models import MediaImg, ImgHistory
 
 
 def logger(message, mr_data):
@@ -63,3 +63,11 @@ class Account(ListView):
     def get_queryset(self):
         return MediaImg.objects.filter(author=self.request.user).order_by('created_at').reverse()
 
+
+class HistoryImg(ListView):
+    template_name = 'main/history.html'
+    context_object_name = 'img_history'
+    paginate_by = 100
+
+    def get_queryset(self):
+        return ImgHistory.objects.filter(img=self.kwargs['pk']).order_by('updated_at').reverse()

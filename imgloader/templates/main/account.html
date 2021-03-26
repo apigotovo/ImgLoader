@@ -11,10 +11,16 @@
 
     {% if img_list %}
 
-        <table>
-            <tr><td><b>Имя файла</b></td><td><b>Дата и время загрузки</b></td><td><b>Ссылка</b></td></tr>
+        <table class="table table-inverse">
+            <tr><td style="width: 250px;"><b>Имя файла</b></td><td><b>Дата и время загрузки</b></td><td><b>История изменений</b></td><td><b>Ссылка</b></td></tr>
             {% for img in img_list %}
-            <tr><td>{{ img.img.name }}</td><td>{{ img.created_at }}</td><td><a target="_blank" href="{{ img.img.url }}">Открыть</a></td></tr>
+            <tr>
+                <td style="width: 250px;">{{ img.img.name }}</td>
+                <td>{{ img.created_at }}</td>
+                <td><a target="_blank" href="{% url 'history' img.pk %}">История</a></td>
+                <td><a target="_blank" href="{{ img.img.url }}">Открыть</a></td>
+
+            </tr>
             {% endfor %}
         </table>
 

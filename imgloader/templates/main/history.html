@@ -1,0 +1,22 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} История изменений {% endblock %}
+
+    {% block header %} История изменений {% endblock %}
+
+    {% block content %}
+    <p><a href="{% url 'account' %}">Личный кабинет</a> | <a href="{% url 'index' %}">Загрузить ещё</a></p>
+
+        <table class="table table-inverse">
+            <tr><td><b>Имя изображения</b></td><td><b>Дата и время обновления</b></td></tr>
+            {% for img in img_history %}
+                <tr>
+                    <td>321</td>
+                    <td>{{ img.updated_at }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    {% endblock %}
