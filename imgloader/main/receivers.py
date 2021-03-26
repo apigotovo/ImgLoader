@@ -20,4 +20,4 @@ def send_email_notification(sender, instance, **kwargs):
 
 @receiver([post_save], sender=MediaImg)
 def history_saver(sender, instance, **kwargs):
-    ImgHistory.objects.create(img=instance, updated_at=datetime.now())
+    ImgHistory.objects.create(img=instance, updated_at=datetime.now(), name=str(instance))

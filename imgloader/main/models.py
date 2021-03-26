@@ -5,7 +5,7 @@ from django.db import models
 class MediaImg(models.Model):
 
     def __str__(self):
-        return str(self.created_at)
+        return str(self.img)
 
     class Meta:
         verbose_name_plural = 'изображения'
@@ -26,4 +26,5 @@ class ImgHistory(models.Model):
         verbose_name = 'обновление'
 
     updated_at = models.DateTimeField(verbose_name='дата/время изменения')
+    name = models.CharField(max_length=256, verbose_name='имя файла')
     img = models.ForeignKey(MediaImg, on_delete=models.CASCADE, verbose_name='изображение')

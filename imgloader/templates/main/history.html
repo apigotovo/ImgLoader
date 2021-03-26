@@ -13,7 +13,7 @@
             <tr><td><b>Имя изображения</b></td><td><b>Дата и время обновления</b></td></tr>
             {% for img in img_history %}
                 <tr>
-                    <td>321</td>
+                    <td><a target="_blank" href="http://imgloader.mergeland.me/media/{{ img.name }}">{{ img.name }}</a></td>
                     <td>{{ img.updated_at }}</td>
                 </tr>
             {% endfor %}

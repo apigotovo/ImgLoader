@@ -17,7 +17,7 @@
             <tr>
                 <td style="width: 250px;">{{ img.img.name }}</td>
                 <td>{{ img.created_at }}</td>
-                <td><a target="_blank" href="{% url 'history' img.pk %}">История</a></td>
+                <td><a href="{% url 'history' img.pk %}">История</a></td>
                 <td><a target="_blank" href="{{ img.img.url }}">Открыть</a></td>
 
             </tr>
