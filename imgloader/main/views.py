@@ -1,7 +1,6 @@
 from datetime import datetime
-from .utilities import logger
 
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import AnonymousRequiredMixin, AjaxResponseMixin, JSONResponseMixin
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
@@ -9,13 +8,6 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, ListView, UpdateView
 from .forms import RegistrationForm, ImgUploadForm
 from .models import MediaImg, ImgHistory
-
-
-# Ограничение доступа к чужим загрузкам
-class AuthorPassesTestMixin(UserPassesTestMixin):
-    def test_func(self):
-        obj = MediaImg.objects.get(pk=self.kwargs['pk'])
-        return obj.author == self.request.user
 
 
 # Вход
@@ -52,7 +44,7 @@ class ImgUpload(LoginRequiredMixin, JSONResponseMixin, AjaxResponseMixin, Create
 
 
 # Обновление файла
-class ImgUpdate(LoginRequiredMixin, AuthorPassesTestMixin, UpdateView):
+class ImgUpdate(LoginRequiredMixin, UpdateView):
     form_class = ImgUploadForm
     template_name = 'main/update_img.html'
     success_url = reverse_lazy('account')
@@ -70,7 +62,7 @@ class Account(LoginRequiredMixin, ListView):
 
 
 # История изменений
-class HistoryImg(LoginRequiredMixin, AuthorPassesTestMixin, ListView):
+class HistoryImg(LoginRequiredMixin, ListView):
     template_name = 'main/history.html'
     context_object_name = 'img_history'
     paginate_by = 100
