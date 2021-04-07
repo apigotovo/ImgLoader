@@ -1,5 +1,6 @@
 /imgloader/db.sqlite3
 *.sqlite3
+*.env
 /venv/
 /imgloader/media/
 /imgloader/static/
